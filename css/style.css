@@ -1,0 +1,460 @@
+/* General Body and Container Styles */
+:root {
+    /* Variabel CSS untuk konsistensi */
+    --primary-color: #eb640b; /* Menggunakan warna oranye utama dari header */
+    --dark-text: #333;
+    --light-text: #666;
+    --background-color: #f9f9f9;
+    --card-border-color: #e0e0e0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Pastikan ini sesuai dengan import font */
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--dark-text);
+    box-sizing: border-box; /* Tambahkan ini agar padding tidak membuat layout bergeser */
+}
+
+/* Reset Box Model untuk semua elemen */
+*, *::before, *::after {
+    box-sizing: inherit; 
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color); /* Initial background: Oranye Gelap */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+#main-header.hidden {
+    transform: translateY(-100%);
+}
+
+#main-header.scrolled {
+    /* Warna oranye transparan saat di-scroll up */
+    background-color: rgba(235, 100, 11, 0.9);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* Warna default */
+    font-weight: 600;
+    transition: color 0.3s ease, padding-bottom 0.3s ease;
+    position: relative; /* Penting untuk pseudo-element ::after */
+    padding-bottom: 8px; /* Ruang untuk underscore */
+}
+
+/* Underscore untuk hover dan active state */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0; /* Letakkan garis di dasar link */
+    width: 0%; /* Mulai dengan lebar 0 */
+    height: 2px;
+    background-color: #ffffff; /* Warna underscore */
+    transition: width 0.3s ease-out; /* Animasi lebar */
+}
+
+/* Hover state: Underscore melebar */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Active state: Underscore selalu 100% dan teks lebih tebal */
+.nav-links li.active a {
+    color: #ffffff; /* Warna aktif tetap putih */
+    font-weight: 700; /* Teks lebih tebal saat aktif */
+}
+
+.nav-links li.active a::after {
+    width: 100%; /* Underscore selalu ada untuk item aktif */
+}
+
+
+/* Banner Section Styles - PERBAIKAN KRITIS DI SINI */
+#banner {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+    overflow: hidden; /* Penting untuk menyembunyikan bagian miring di luar */
+    display: flex;
+    flex-direction: column; /* Menggunakan column agar content di tengah */
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    z-index: 1; /* Ensure banner is below header */
+    /* background-image HANYA DI .banner-image, BUKAN DI SINI */
+    
+    /* HAPUS clip-path apa pun dari sini */
+}
+
+/* Elemen untuk gambar latar belakang banner */
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Pastikan di belakang teks dan potongan putih */
+    filter: brightness(0.65); /* Efek gelap pada gambar */
+    
+    /* transform: translateY untuk parallax akan di-handle oleh JS */
+    /* PENTING: HAPUS SEMUA TRANSFORM SKEWY DARI SINI */
+}
+
+/* Pseudo-element untuk membuat bagian miring putih di bawah gambar */
+#banner::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; /* Posisi relatif terhadap #banner. Sesuaikan untuk menutupi sepenuhnya. */
+                     /* Gambar Anda menunjukkan potongan putih dimulai dari bawah gambar,
+                        jadi mungkin nilai ini perlu di-tuning ulang (misal: 0px atau -1px)
+                        dan height yang cukup besar. */
+    left: 0;
+    width: 100%;
+    height: 100px; /* Tinggi efek putih yang miring */
+    background-color: #ffffff; /* PUTIH SOLID */
+    z-index: 0; /* Di atas .banner-image tapi di bawah banner-content */
+    transform: skewY(-1deg); /* Sudut kemiringan */
+    transform-origin: top left; /* Titik asal kemiringan: top left (seperti yang Anda inginkan) */
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.05); /* Sedikit bayangan di atas garis miring */
+}
+
+
+.banner-content {
+    position: relative;
+    z-index: 2; /* Pastikan teks di atas gambar dan pseudo-element */
+    padding: 20px;
+    /* Pastikan tidak ada transform: skewY; di sini */
+}
+
+.banner-content h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Menambah bayangan teks agar lebih terbaca */
+}
+
+.banner-content p {
+    font-size: 1.2em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Menambah bayangan teks agar lebih terbaca */
+    /* PASTIKAN TIDAK ADA TRANSFORM: SKEWY DI SINI */
+}
+
+/* List Post Controls */
+#ideas-list .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 30px 0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.controls .items-info {
+    font-size: 0.9em;
+    color: var(--light-text);
+}
+
+.filter-options {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-options label {
+    font-size: 0.9em;
+    color: var(--light-text);
+}
+
+.filter-options select {
+    padding: 8px 12px;
+    border: 1px solid var(--card-border-color);
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-color: #fff;
+    outline: none;
+    /* Styling untuk custom arrow pada select */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    padding-right: 30px; /* Ruang untuk custom arrow */
+}
+
+.filter-options select:focus {
+    border-color: var(--primary-color);
+}
+
+/* Card Grid Styles */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.card-thumbnail {
+    width: 100%;
+    padding-bottom: 56.25%; /* Rasio 16:9 (9 / 16 * 100%) */
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Background abu-abu muda jika gambar belum dimuat */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Tampilkan placeholder jika src gambar kosong */
+.card-thumbnail img:not([src]):not([srcset]),
+.card-thumbnail img[src=""][srcset=""] {
+    display: none;
+}
+.card-thumbnail::before {
+    color: #bbb;
+    font-size: 0.9em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    display: block; /* Tampilkan secara default, akan disembunyikan oleh JS jika ada gambar */
+}
+/* Sembunyikan placeholder jika gambar sudah ada atau memiliki src */
+.card-thumbnail img[src]:not([src=""]):not([src^="data:"]) + .card-thumbnail::before {
+    display: none;
+}
+
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.card-date {
+    font-size: 0.85em;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin: 0;
+    line-height: 1.4;
+    height: 3.2em; /* Approx. 3 lines * 1.4 line-height * 1.1 font-size */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    gap: 8px; /* Menambah jarak antar item pagination */
+}
+
+.pagination-link,
+.pagination .ellipsis { /* Gabungkan styling dasar untuk link dan ellipsis */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 10px;
+    text-decoration: none;
+    color: var(--dark-text); /* Warna teks default: hitam gelap */
+    background-color: #fff; /* Background default: putih */
+    border: 1px solid #ddd; /* Border tipis abu-abu */
+    border-radius: 8px; /* Sudut membulat */
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Hover state untuk link pagination yang TIDAK aktif */
+.pagination-link:hover:not(.active) {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Active state untuk link pagination */
+.pagination-link.active {
+    background-color: var(--primary-color); /* Warna oranye solid untuk aktif */
+    color: #fff; /* Warna teks putih untuk aktif */
+    border-color: var(--primary-color); /* Border warna oranye solid untuk aktif */
+    cursor: default; /* Tidak bisa diklik saat aktif */
+    box-shadow: 0 2px 5px rgba(235, 100, 11, 0.3);
+}
+
+/* Style untuk elipsis (...) */
+.pagination .ellipsis {
+    color: #666; /* Warna teks abu-abu untuk elipsis */
+    cursor: default; /* Elipsis tidak bisa diklik */
+}
+
+/* Menonaktifkan tombol prev/next/first/last saat tidak bisa digunakan */
+.pagination-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f8f8f8;
+    border-color: #eee;
+    box-shadow: none;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px; /* Sesuaikan padding */
+    }
+
+    .nav-links {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .nav-links li {
+        margin: 0 10px 10px 0;
+    }
+
+    #banner {
+        height: 300px;
+        margin-top: 60px; /* Sesuaikan margin top karena header lebih kecil */
+    }
+
+    .banner-content h1 {
+        font-size: 2.5em;
+    }
+
+    .banner-content p {
+        font-size: 1em;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-options {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Hanya properti yang berubah pada breakpoint ini */
+    .card-grid {
+        grid-template-columns: 1fr; /* Satu kolom untuk layar sangat kecil */
+    }
+
+    .navbar {
+        padding: 10px 10px;
+    }
+
+    .nav-links li {
+        margin: 0 5px 5px 0;
+    }
+
+    .banner-content h1 {
+        font-size: 2em;
+    }
+}

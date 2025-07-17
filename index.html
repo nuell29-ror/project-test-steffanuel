@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suitmedia Ideas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo_suitmedia.png" alt="Suitmedia Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Work</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li class="active"><a href="#">Ideas</a></li> <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="banner" class="parallax-container">
+        <div class="banner-image"></div> 
+        <div class="banner-content">
+            <h1>Ideas</h1> <p>Where all our great things begin</p> </div>
+        </section>
+
+    <main class="container">
+        <section id="ideas-list">
+            <div class="controls">
+                <div class="items-info">
+                    Showing <span id="current-start">0</span> - <span id="current-end">0</span> of <span id="total-items">0</span>
+                </div>
+                <div class="filter-options">
+                    <div class="show-per-page">
+                        <label for="show-per-page">Show per page:</label>
+                        <select id="show-per-page">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div class="sort-by">
+                        <label for="sort-by">Sort by:</label>
+                        <select id="sort-by">
+                            <option value="-published_at">Newest</option>
+                            <option value="published_at">Oldest</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid" id="card-grid">
+                </div>
+
+            <div class="pagination">
+                </div>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
